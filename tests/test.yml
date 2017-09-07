@@ -19,8 +19,6 @@
     - vars.yml
   roles:
     - role: rename-database
-      target_db: "target"
-      replacement_db: "staging"
       swap_db: yes
 
   post_tasks:
