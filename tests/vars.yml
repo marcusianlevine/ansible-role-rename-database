@@ -1,14 +1,14 @@
 ---
 
+db_host: db
+login_user: tester
+login_password: sesame
+
 provision_docker_inventory:
-  - name: db 
+  - name: "{{ db_host }}"
     image: "postgres:latest"
     env:
       POSTGRES_USER: "{{ login_user }}"
       POSTGRES_PASS: "{{ login_password }}"
   - name: tester
     image: "python:2.7"
-
-db_host: db
-login_user: tester
-login_password: sesame

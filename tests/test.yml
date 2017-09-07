@@ -15,6 +15,8 @@
       provision_docker_use_docker_connection: true
 
 - hosts: tester
+  vars_files:
+    - vars.yml
   roles:
     - role: rename-database
       target_db: "target"
