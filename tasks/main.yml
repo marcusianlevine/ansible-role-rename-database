@@ -16,7 +16,7 @@
     template: template0
     state: present
     owner: "{{ db_owner }}"
-    login_host: "{{ host }}"
+    login_host: "{{ db_host }}"
     login_user: "{{ login_user }}"
     login_password: "{{ login_password }}"
   with_items: 
