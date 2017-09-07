@@ -22,12 +22,14 @@
       swap_db: yes
 
   post_tasks:
-    - name: Check for existence of old target db
+    - name: Get list of databases
       shell: "{{ psql_cnxn }} -lqt | cut -d '|' -f 1"
       register: test_db_names
-    
-    - debug:
-        var: test_db_names
 
-    - assert:
-        that: "new_target_name in test_db_names.stdout"
+    - name: Check that all the appropriate databases are present
+      assert:
+        that: "item in test_db_names.stdout"
+      with_items:
+        - "{{ target_db }}"
+        - "{{ replacement_db }}"
+        - "{{ new_target_name }}"
