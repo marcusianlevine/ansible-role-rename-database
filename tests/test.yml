@@ -17,4 +17,14 @@
 - hosts: tester
   roles:
     - role: rename-database
-      host: db
+      target_db: "target"
+      replacement_db: "staging"
+      swap_db: yes
+
+  post_tasks:
+    - name: Check for existence of old target db
+      shell: psql -lqt | cut -d \| -f 1
+      register: test_db_names
+    
+    - assert:
+        that: "{{ new_target_name }} in {{ test_db_names }}"

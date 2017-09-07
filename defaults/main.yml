@@ -1,6 +1,6 @@
 ---
 
-host: localhost
-port: 5432
+db_host: localhost
+db_port: 5432
 
 new_target_name: "old_{{ target_db }}_{{ ansible_date_time.epoch }}"

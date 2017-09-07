@@ -1,4 +1,4 @@
-Role Name
+marcusianlevine.rename-database
 =========
 
 Small utility role to create, rename, and swap databases on a remote database server (currently only targets PostgreSQL)
@@ -12,7 +12,8 @@ Role Variables
 --------------
 
 ### Required
-- `host`: hostname of the remote database server to operate on
+- `db_host`: hostname of the remote database server to operate on
+- `db_port`: port that the database server accepts connections on
 - `login_user`: connect to the remote database with this username
 - `login_password`: connect to the remote database with this password _(NOTE: Use ansible-vault to provide this value from an encrypted file! Don't store your database password unencrypted in your repo!)_
 - `target_db`: name of the database which will be created/renamed/swapped.
@@ -29,8 +30,10 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: localhost 
       roles:
          - role: marcusianlevine.rename-database
+           db_host: db.example.co
+           login_user: myuser
+           login_password: secret
            target_db: my_target
-           new_target_name: 
            replacement_db: my_staging_db
            swap_db: yes
 
