@@ -26,5 +26,8 @@
       shell: psql -lqt | cut -d \| -f 1
       register: test_db_names
     
+    - debug:
+        var: test_db_names
+
     - assert:
-        that: "{{ new_target_name }} in {{ test_db_names }}"
+        that: "{{ new_target_name }} in {{ test_db_names.stdout }}"
