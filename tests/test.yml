@@ -23,7 +23,7 @@
 
   post_tasks:
     - name: Check for existence of old target db
-      shell: "{{ psql_cnxn }} -lqt | cut -d \| -f 1"
+      shell: {{ psql_cnxn }} -lqt | cut -d \| -f 1
       register: test_db_names
     
     - debug:
