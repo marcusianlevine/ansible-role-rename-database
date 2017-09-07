@@ -1,0 +1,10 @@
+{% macro kill_cnxn(db) %}
+SELECT *, pg_terminate_backend(pid) 
+FROM pg_stat_activity 
+WHERE pid <> pg_backend_pid() 
+AND datname = '{{ db }}';
+{% endmacro %}
+
+{% for db in dbs_to_kill %}
+{{ kill_cnxn(db) }}
+{% endfor %}

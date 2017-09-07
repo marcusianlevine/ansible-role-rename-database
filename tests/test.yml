@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: no
+  connection: local
+  vars_files:
+    - vars.yml
+  pre_tasks:
+    - shell: which python 
+      ignore_errors: yes
+      register: docker_py
+    - debug: 
+        var: docker_py
+  roles:
+    - role: chrismeyersfsu.provision_docker
+      provision_docker_use_docker_connection: true
+
+- hosts: tester
+  roles:
+    - role: rename-database
+      host: db

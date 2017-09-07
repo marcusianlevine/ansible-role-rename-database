@@ -1,0 +1,28 @@
+---
+
+- name: Install dependencies for postgres connection
+  apt: name={{ item }} update_cache=yes force=yes state=installed
+  with_items:
+    - postgresql-client-common
+    - postgresql-client
+    - python-psycopg2
+
+- name: Make sure the specified databases are present
+  postgresql_db:
+    name: "{{ item }}"
+    encoding: UTF-8
+    lc_collate: en_US.UTF-8
+    lc_ctype: en_US.UTF-8
+    template: template0
+    state: present
+    owner: "{{ db_owner }}"
+    login_host: "{{ host }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+  with_items: 
+    - "{{ target_db }}"
+    - "{{ replacement_db }}"
+  when: item is defined and item
+
+- include: swap.yml
+  when: replacement_db is defined and swap_db is defined and swap_db

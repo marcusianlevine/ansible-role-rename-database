@@ -1,0 +1,6 @@
+---
+
+psql_bin: "/usr/bin/psql"
+psql_cnxn: "{{ psql_bin }} -h {{ host }} -U {{ login_user }} -d postgres -p {{ port }}"
+
+kill_cnxns_sql_path: "/tmp/kill_cnxns.sql"
