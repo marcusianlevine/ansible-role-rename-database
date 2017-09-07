@@ -30,4 +30,4 @@
         var: test_db_names
 
     - assert:
-        that: "{{ new_target_name }} in {{ test_db_names.stdout }}"
+        that: "new_target_name in test_db_names.stdout"
