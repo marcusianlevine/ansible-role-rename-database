@@ -30,5 +30,5 @@
     db_swapped: true
 
 - name: Recreate replacement db
-  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ replacement_db }} WITH OWNER {{ db_user }};'"
+  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ replacement_db }} WITH OWNER {{ db_owner }};'"
   tags: db-swap
