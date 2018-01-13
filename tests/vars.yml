@@ -4,8 +4,11 @@ db_host: testdb
 login_user: tester
 login_password: sesame
 
-target_db: "target"
-replacement_db: "staging"
+drop_db: yes
+
+databases:
+  - target: "target"
+    replacement: "staging"
 
 provision_docker_inventory:
   - name: "db"

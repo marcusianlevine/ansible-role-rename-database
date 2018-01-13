@@ -1,0 +1,16 @@
+---
+
+- set_fact:
+    dbs_to_kill: "{{ dbs_to_kill|default([]) + [ item.target ] }}"
+  with_items: "{{ databases }}"
+
+- include_tasks: kill.yml
+
+- name: Drop target databases
+  postgresql_db:
+    name: "{{ item }}"
+    state: absent
+    login_host: "{{ db_host }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+  with_items: "{{ dbs_to_kill }}"

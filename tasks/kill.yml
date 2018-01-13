@@ -1,0 +1,11 @@
+---
+
+- name: Copy template into temp dir for execution
+  template:
+    src: kill_cnxns.j2
+    dest: "{{ kill_cnxns_sql_path }}"
+
+- name: Disconnect all sessions from databases to be swapped/dropped
+  shell: "{{ psql_cnxn }} -f {{ kill_cnxns_sql_path }}"
+  args:
+    executable: /bin/bash

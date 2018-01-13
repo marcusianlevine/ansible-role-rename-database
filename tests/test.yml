@@ -29,7 +29,4 @@
     - name: Check that all the appropriate databases are present
       assert:
         that: "item in test_db_names.stdout"
-      with_items:
-        - "{{ target_db }}"
-        - "{{ replacement_db }}"
-        - "{{ new_target_name }}"
+      with_items: "{{ flat_dbs }}"

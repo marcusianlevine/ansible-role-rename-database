@@ -7,6 +7,15 @@
     - postgresql-client
     - python-psycopg2
 
+- name: Set fact with flattened list of databases
+  set_fact: 
+    flat_dbs: "{{ flat_dbs|default([]) + [ item.target ] + ( [ item.replacement ]  | default([]) ) }}"
+  with_items: "{{ databases }}"
+
+- name: Drop target databases if specified
+  include: drop.yml
+  when: drop_db is defined and drop_db
+
 - name: Make sure the specified databases are present
   postgresql_db:
     name: "{{ item }}"
@@ -19,10 +28,10 @@
     login_host: "{{ db_host }}"
     login_user: "{{ login_user }}"
     login_password: "{{ login_password }}"
-  with_items: 
-    - "{{ target_db }}"
-    - "{{ replacement_db }}"
-  when: item is defined and item
+  with_items: "{{ flat_dbs }}"
 
-- include: swap.yml
-  when: replacement_db is defined and swap_db is defined and swap_db
+- include_tasks: swap.yml
+  when: swap_db is defined and swap_db
+
+- name: Ensure users have proper permissions on all dbs
+  include_tasks: grant.yml
