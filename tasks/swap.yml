@@ -1,34 +1,17 @@
 ---
 
-- name: Set DBs that need connections killed
-  set_fact:
-    dbs_to_kill:
-      - target_db
-      - replacement_db
+- set_fact: 
+    dbs_to_kill: "{{ flat_dbs }}"
 
-- name: Copy template into temp dir for execution
-  template:
-    src: kill_cnxns.j2
-    dest: "{{ kill_cnxns_sql_path }}"
+- name: Kill connections to all dbs
+  include_tasks: kill.yml
 
-- name: Disconnect all sessions from databases to be swapped
-  shell: "{{ psql_cnxn }} -f {{ kill_cnxns_sql_path }}"
-  args:
-    executable: /bin/bash
-  tags: db-swap
-
-- name: Rename old target_db and replace with current replacement_db
-  shell: "{{ psql_cnxn }} -c 'ALTER DATABASE {{ item.current }} RENAME TO {{ item.new }};'"
-  with_items:
-    - current: "{{ target_db }}"
-      new: "{{ new_target_name }}" 
-    - current: "{{ replacement_db }}"
-      new: "{{ target_db }}"
-  tags: db-swap
-
-- set_fact:
-    db_swapped: true
-
-- name: Recreate replacement db
-  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ replacement_db }} WITH OWNER {{ db_owner }};'"
-  tags: db-swap
+- name: Loop over databases and swap names
+  include_tasks: single_swap.yml 
+  vars: 
+    target: "{{ db.target }}"
+    replacement: "{{ db.replacement }}"
+    new_target_name: "{{ db.new_target_name | default(new_target_prefix ~ db.target ~ new_target_suffix) }}"
+  with_items: "{{ databases }}"
+  loop_control:
+    loop_var: db

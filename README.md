@@ -16,11 +16,12 @@ Role Variables
 - `db_port`: port that the database server accepts connections on
 - `login_user`: connect to the remote database with this username
 - `login_password`: connect to the remote database with this password _(NOTE: Use ansible-vault to provide this value from an encrypted file! Don't store your database password unencrypted in your repo!)_
-- `target_db`: name of the database which will be created/renamed/swapped.
-- `replacement_db`: current name of the database which will replace `target_db`.
-- `new_target_name`: specify the new name which `target_db` should be given after being replaced by `replacement_db`. (see `defaults/main.yml` for default value)
+- `databases`: list of dictionaries describing the databases which will be created/renamed/swapped. Should have the following items:
+  - `target`: name of the database .
+  - `replacement`: current name of the database which will replace `target`.
+  - `new_target_name`: Optionally specify the new name which `target` should be given after being replaced by `replacement`. (see `defaults/main.yml` for default prefix and suffix used if not specified)
 - `db_owner`: name of role/user on remote database server that should own the databases created by this role. Defaults to `login_user`
-- `swap_db`: failsafe control variable to prevent accidental swaps. In order to swap/replace `target_db` with `replacement_db`, you must set this variable to be truthy.
+- `swap_db`: failsafe control variable to prevent accidental swaps. In order to swap/replace the targets with their replacements, you must set this variable to be truthy.
 
 Example Playbook
 ----------------

@@ -1,0 +1,14 @@
+---
+
+- set_fact:
+    dbs_to_grant: "{{ flat_dbs }}"
+
+- name: Copy template into temp dir for execution
+  template:
+    src: grant_cnxns.j2
+    dest: "{{ grant_cnxns_sql_path }}"
+
+- name: Re-permission connections to DBs to users previously prohibited
+  shell: "{{ psql_cnxn }} -f {{ grant_cnxns_sql_path }}"
+  args:
+    executable: /bin/bash
