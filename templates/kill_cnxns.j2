@@ -1,4 +1,8 @@
 {% macro kill_cnxn(db) %}
+
+REVOKE CONNECT ON DATABASE {{ db }} FROM public;
+REVOKE CONNECT ON DATABASE {{ db }} FROM {{ db_owner }};
+
 SELECT *, pg_terminate_backend(pid) 
 FROM pg_stat_activity 
 WHERE pid <> pg_backend_pid() 
