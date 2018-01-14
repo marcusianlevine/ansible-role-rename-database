@@ -1,12 +1,5 @@
 ---
 
-- name: Install dependencies for postgres connection
-  apt: name={{ item }} update_cache=yes force=yes state=installed
-  with_items:
-    - postgresql-client-common
-    - postgresql-client
-    - python-psycopg2
-
 - name: Set fact with flattened list of databases
   set_fact: 
     flat_dbs: "{{ flat_dbs|default([]) + [ item.target ] + ( [ item.replacement ]  | default([]) ) }}"

@@ -30,7 +30,18 @@ galaxy_info:
     versions:
     - trusty
     - xenial
-
+  - name: EL
+    versions:
+    - 7
 
   galaxy_tags:
     - database
+
+dependencies:
+- role: GROG.package
+  package_list:
+    - name: postgresql-client-common
+      yum_ignore: yes
+    - name: postgresql-client
+      yum: postgresql-libs
+    - name: python-psycopg2
