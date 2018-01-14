@@ -1,6 +1,9 @@
 marcusianlevine.rename-database
 =========
 
+[![Build Status](https://travis-ci.org/marcusianlevine/ansible-role-rename-database.svg?branch=perms)](https://travis-ci.org/marcusianlevine/ansible-role-rename-database)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-debops.php-660198.svg?style=flat)](https://galaxy.ansible.com/marcusianlevine/rename-database)
+
 Small utility role to create, rename, and swap databases on a remote database server (currently only targets PostgreSQL)
 
 Requirements
