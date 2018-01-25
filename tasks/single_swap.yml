@@ -5,8 +5,10 @@
   with_items:
     - current: "{{ target }}"
       new: "{{ new_target_name }}" 
+    - current: "{{ replacement }}"
+      new: "{{ target }}"
   tags: db-swap
 
-- name: Create target db from replacement db
-  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ target }} WITH TEMPLATE {{ replacement }} WITH OWNER {{ db_owner }};'"
+- name: Re-create replacement db (optionally using target as template)
+  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ target }} {{ keep_replacement | ternary('WITH TEMPLATE ' ~ replacement, '')  }} WITH OWNER {{ db_owner }};'"
   tags: db-swap

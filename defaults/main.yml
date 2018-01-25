@@ -6,3 +6,5 @@ db_owner: "{{ login_user }}"
 
 new_target_prefix: "old_"
 new_target_suffix: "_{{ ansible_date_time.epoch }}"
+
+keep_replacement: yes

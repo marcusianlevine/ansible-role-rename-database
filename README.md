@@ -25,6 +25,7 @@ Role Variables
   - `new_target_name`: Optionally specify the new name which `target` should be given after being replaced by `replacement`. (see `defaults/main.yml` for default prefix and suffix used if not specified)
 - `db_owner`: name of role/user on remote database server that should own the databases created by this role. Defaults to `login_user`
 - `swap_db`: failsafe control variable to prevent accidental swaps. In order to swap/replace the targets with their replacements, you must set this variable to be truthy.
+- `keep_replacement`: by default, this role recreates the original databases after they are renamed. Set this to false to disable.
 
 Example Playbook
 ----------------
