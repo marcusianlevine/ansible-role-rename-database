@@ -6,7 +6,7 @@
   with_items: "{{ databases }}"
 
 - name: Drop target databases if specified
-  include: drop.yml
+  include_tasks: drop.yml
   when: drop_db is defined and drop_db|bool
 
 - name: Make sure the specified databases are present
