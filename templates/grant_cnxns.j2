@@ -6,5 +6,5 @@ GRANT CONNECT ON DATABASE {{ db }} TO {{ db_user }};
 {% endmacro %}
 
 {% for db in dbs_to_grant %}
-grant_cnxn(db)
+{{ grant_cnxn(db) }}
 {% endfor %}
