@@ -1,7 +1,7 @@
 {% macro grant_cnxn(db) %}
 
 GRANT CONNECT ON DATABASE {{ db }} TO public;
-GRANT CONNECT ON DATABASE {{ db }} TO {{ db_user }};
+GRANT CONNECT ON DATABASE {{ db }} TO {{ db_owner }};
 
 {% endmacro %}
 
