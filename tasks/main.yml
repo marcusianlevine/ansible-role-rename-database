@@ -7,7 +7,7 @@
 
 - name: Drop target databases if specified
   include: drop.yml
-  when: drop_db is defined and drop_db
+  when: drop_db is defined and drop_db|bool
 
 - name: Make sure the specified databases are present
   postgresql_db:
@@ -24,7 +24,7 @@
   with_items: "{{ flat_dbs }}"
 
 - include_tasks: swap.yml
-  when: swap_db is defined and swap_db
+  when: swap_db is defined and swap_db|bool
 
 - name: Ensure users have proper permissions on all dbs
   include_tasks: grant.yml
