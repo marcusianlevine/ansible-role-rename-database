@@ -10,5 +10,5 @@
   tags: db-swap
 
 - name: Re-create replacement db (optionally using target as template)
-  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ target }} {{ keep_replacement | ternary('WITH TEMPLATE ' ~ replacement, '')  }} WITH OWNER {{ db_owner }};'"
+  shell: "{{ psql_cnxn }} -c 'CREATE DATABASE {{ target }}{{ keep_replacement | ternary(' WITH TEMPLATE ' ~ replacement, '')  }} WITH OWNER {{ db_owner }};'"
   tags: db-swap
